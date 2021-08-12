@@ -1,4 +1,4 @@
-export async function handleRequest(request: Request): Promise<Response> {
+export async function scheduledHandleRequest(event: any) {
   const resp = await fetch ("https://api.commoprices.com/v2/dataseries/INQJK/data", {
     headers: {
       // @ts-ignore
@@ -10,9 +10,6 @@ export async function handleRequest(request: Request): Promise<Response> {
     date: item[0],
     price: item[1]
   }) )
-  return new Response(JSON.stringify(prices), {
-    headers: {
-      'Content-type': 'application/json'
-    }
-  })
+  // @ts-ignore
+  PRICES_DB.put("Coffee", prices)
 }

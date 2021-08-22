@@ -1,18 +1,25 @@
 export async function handleRequest(request: Request): Promise<Response> {
-  const resp = await fetch ("https://api.commoprices.com/v2/dataseries/INQJK/data", {
-    headers: {
+  let response: Response
+  switch (request.method == 'GET') {
+    case request.headers.get('Key') === 'Coffee': {
       // @ts-ignore
-      Authorization: `Bearer ${API_KEY}`
+      const prices = PRICES_DB.get('Coffee')
+      prices.then((result: any) => {
+        JSON.parse(result)
+        return prices
+      }).catch((error: any) => {
+        console.log('caught error', error)
+      })
+
+      return new Response(JSON.stringify(prices), {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
     }
-  })
-  const response_data = await resp.json()
-  const prices = response_data.data.request.dataseries.map((item: any) => ({
-    date: item[0],
-    price: item[1]
-  }) )
-  return new Response(JSON.stringify(prices), {
-    headers: {
-      'Content-type': 'application/json'
-    }
-  })
+    default:
+      response = new Response('No data found for given item', { status: 500 })
+      break
+  }
+  return response
 }

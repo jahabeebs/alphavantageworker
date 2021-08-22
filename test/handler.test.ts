@@ -11,8 +11,8 @@ describe('handle', () => {
 
   test('handle GET', async () => {
     const result = await handleRequest(new Request('/', { method: 'GET' }))
-    expect(result.status).toEqual(200)
+    expect(result.status).toEqual(500)
     const text = await result.text()
-    expect(text).toEqual('request method: GET')
+    expect(text).toEqual('No data found for given item')
   })
 })

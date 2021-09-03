@@ -2,7 +2,8 @@ export async function scheduledHandleRequest(event: any) {
   const resp = await fetch ("https://api.commoprices.com/v2/dataseries/INQJK/data", {
     headers: {
       // @ts-ignore
-      Authorization: `Bearer ${API_KEY}`
+      Authorization: `Bearer ${API_KEY}`,
+      Accept: 'application/json'
     }
   })
   const response_data = await resp.json()
@@ -11,5 +12,5 @@ export async function scheduledHandleRequest(event: any) {
     price: item[1]
   }) )
   // @ts-ignore
-  PRICES_DB.put("Coffee", prices)
+  await PRICES_DB.put("Coffee", prices)
 }

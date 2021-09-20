@@ -3,7 +3,7 @@ export async function scheduledHandleRequest(event: any) {
     headers: {
       // @ts-ignore
       Authorization: `Bearer ${API_KEY}`,
-      Accept: 'application/json'
+      Accept: "application/json"
     }
   })
   const response_data = await resp.json()

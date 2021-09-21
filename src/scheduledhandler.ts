@@ -1,16 +1,22 @@
 export async function scheduledHandleRequest(event: any) {
-  const resp = await fetch ("https://api.commoprices.com/v2/dataseries/INQJK/data", {
-    headers: {
+  return new Promise((resolve, reject) => {
+    const resp = fetch('https://api.commoprices.com/v2/dataseries/INQJK/data', {
+      headers: {
+        // @ts-ignore
+        Authorization: `Bearer ${API_KEY}`,
+        Accept: 'application/json',
+      },
+    }).then((respuesta) => respuesta.json())
+      .then((respuesta) => respuesta.data.request.dataseries.map((item: any) => ({
+        date: item[0],
+        price: item[1],
+      })))
       // @ts-ignore
-      Authorization: `Bearer ${API_KEY}`,
-      Accept: "application/json"
+      .then((respuesta) => PRICES_DB.put('Coffee', JSON.stringify(respuesta)))
+    if (resp == null) {
+      throw new Error('No data returned')
+    } else {
+      resolve(resp)
     }
   })
-  const response_data = await resp.json()
-  const prices = response_data.data.request.dataseries.map((item: any) => ({
-    date: item[0],
-    price: item[1]
-  }) )
-  // @ts-ignore
-  await PRICES_DB.put("Coffee", prices)
 }

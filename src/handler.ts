@@ -25,8 +25,12 @@ const getItemData = async (request: Request) => {
       const pricesAsJSON = JSON.parse(prices);
       return new Response(JSON.stringify(pricesAsJSON), {
         headers: {
-          "Content-Type": "application/json"
-        },
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Max-Age': '86400'
+        }
       })
     }
     default:

@@ -18,7 +18,7 @@ export async function handleRequest(request: Request): Promise<Response> {
 
 const getItemData = async (request: Request) => {
   let response: Response
-  const availableCommodities = ['Coffee', 'CoffeeArabica']
+  const availableCommodities = ['Coffee', 'CoffeeArabica', 'Bananas']
   const headerKeyValue = request.headers.get('Key') as string
   switch (request.method == 'GET') {
     case availableCommodities.includes(headerKeyValue): {
@@ -39,7 +39,7 @@ const getItemData = async (request: Request) => {
       })
     }
     default:
-      response = new Response('No data found for given commodity', { status: 500 })
+      response = new Response('No data found for given item', { status: 500 })
       break
   }
   return response

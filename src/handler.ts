@@ -18,7 +18,8 @@ export async function handleRequest(request: Request): Promise<Response> {
 
 const getItemData = async (request: Request) => {
   let response: Response
-  const availableCommodities = ['Coffee', 'CoffeeArabica', 'Bananas']
+  const availableCommodities = ['Coffee', 'CoffeeArabica', 'Bananas', 'Cocoa', 'PalmOil',
+    'Soybeans', 'Barley', 'Maize', 'Oranges', 'Tea', 'Wheat', 'Sugar']
   const headerKeyValue = request.headers.get('Key') as string
   switch (request.method == 'GET') {
     case availableCommodities.includes(headerKeyValue): {

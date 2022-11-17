@@ -15,7 +15,7 @@ export async function scheduledHandleRequest(event: any) {
       }).then((respuesta) => respuesta.json())
         .then((respuesta) => respuesta.data.request.dataseries.map((item: any) => ({
           date: item[0],
-          price: item[1],
+          price: item[2],
         })))
         // @ts-ignore
         .then((respuesta) => PRICES_DB.put(databaseCode[i], JSON.stringify(respuesta)))
